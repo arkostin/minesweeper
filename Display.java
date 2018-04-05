@@ -15,9 +15,10 @@ public class Display extends JPanel implements MouseListener{
     private Color color_grid_lines = Color.white;
     private Color color_opened = Color.lightGray;
     private Color color_flagged = Color.red; 
-    private int mines = 10;
+    private int mines = 240;
     private int flagged = 0;
     private int opened = 0;
+    private boolean first_click = true;
 
     public Display(){
         //Initialize the 'cells' array with instances of the Cell class
@@ -34,8 +35,13 @@ public class Display extends JPanel implements MouseListener{
         //Add the Mouse Listener
         addMouseListener(this);
     }
+    //Function that gets called when you either flag or open every single square on the board, correctly
     public void win(){
         System.out.println("Congrats, you've done it!");
+    }
+    //Function that gets called when you click a bomb/blow your legs off
+    public void lose(){
+        System.out.println("This happens when you lose);
     }
     //Add a number of mines to the minefield, randomly
     public void add_mines(int x){
@@ -88,6 +94,8 @@ public class Display extends JPanel implements MouseListener{
     
     //The method that gets invoked when you click stuff
     public void click(int x, int y){
+        if(first_click)
+            first_click(x, y);
         if(cells[x][y].is_bomb){
             //Stuff that happens if you click a bomb
         }
@@ -114,9 +122,17 @@ public class Display extends JPanel implements MouseListener{
                 }
             }
         }
-        if(flagged + opened >= grid_width * grid_height){
+        if(flagged + opened >= grid_width * grid_height && flagged == mines){
             win();
         }
+    }
+    public void first_click(int x, int y){
+        if(cells[x][y].is_bomb){
+            cells[x][y].is_bomb = false;
+            mines--;
+            add_mines(1);
+        }
+        first_click = false;
     }
     //Opens the surrounding unflagged squares if the user clicks on a numbered cell that has an equivalent number of surrounding flagged squares
     public void number_open_neighbours(int x, int y){
@@ -149,6 +165,9 @@ public class Display extends JPanel implements MouseListener{
         else{
            cells[x][y].is_flagged = true;
            flagged++;
+        }
+        if(flagged + opened >= grid_width * grid_height && flagged == mines){
+            win();
         }
         this.repaint();
     }
