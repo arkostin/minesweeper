@@ -1,8 +1,6 @@
 import javax.swing.JFrame;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 
-class Main implements MouseListener{
+class Main{
     //Initializing variables and such
     private static JFrame window;
     private static Display disp;
