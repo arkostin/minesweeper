@@ -24,32 +24,4 @@ class Main implements MouseListener{
         window.setVisible(true);
         window.getContentPane().add(disp);
     }
-
-    //Overriding the MouseListener methods, as usual
-    @Override
-    public void mouseClicked(MouseEvent e){
-        mouse_x = e.getX();
-        mouse_y = e.getY();
-        System.out.println("Cell " + mouse_x + ", " + mouse_y + " has been clicked");
-
-        disp.click(mouse_x, mouse_y);
-
-        window.repaint();
-    }
-    @Override
-    public void mouseExited(MouseEvent e){
-
-    }
-    @Override
-    public void mouseEntered(MouseEvent e){
-
-    }
-    @Override
-    public void mouseReleased(MouseEvent e){
-
-    }
-    @Override
-    public void mousePressed(MouseEvent e){
-
-    }
 }
